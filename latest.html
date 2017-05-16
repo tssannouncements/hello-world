@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cross-Browser Rich Text Editor (RTE)</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="cross-browser rich text editor, rte, textarea, htmlarea, content management, cms, blog, internet explorer, firefox, safari, opera, netscape, konqueror" />
+	<meta name="description" content="The cross-browser rich-text editor (RTE) is based on the designMode() functionality introduced in Internet Explorer 5, and implemented in Mozilla 1.3+ using the Mozilla Rich Text Editing API." />
+	<meta name="author" content="Kevin Roth" />
+	<meta name="ROBOTS" content="ALL" />
+	<!-- html2xhtml.js written by Jacob Lee <letsgolee@lycos.co.kr> //-->
+	<script language="JavaScript" type="text/javascript" src="../cbrte/html2xhtml.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../cbrte/richtext.min.js"></script>
+</head>
+<body>
+
+<h2>Cross-Browser Rich Text Editor (RTE) Demo</h2>
+<p>For more information, visit the <a href="http://www.kevinroth.com/rte/">Cross-Browser Rich Text Editor (RTE) home page</a>.</p>
+
+<!-- START Demo Code -->
+<form name="RTEDemo" action="demo.php" method="post" onsubmit="return submitForm();">
+<script language="JavaScript" type="text/javascript">
+<!--
+function submitForm() {
+	//make sure hidden and iframe values are in sync for all rtes before submitting form
+	updateRTEs();
+	
+	return true;
+}
+//Usage: initRTE(imagesPath, includesPath, cssFile, genXHTML, encHTML)
+initRTE("./images/", "./", "", true);
+//-->
+</script>
+<noscript><p><b>Javascript must be enabled to use this form.</b></p></noscript>
+
+<style type="text/css">@import "./rte.css";</style>
+    
+    <iframe width="150" height="100" id="cp" src="./palette.htm" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="visibility: visible; position: absolute; left: 334px; top: 204px;">
+    
+    <html id="cp"><head>
+	<title>RTE Color Palette</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<script type="text/javascript">
+	<!--
+	function selectColor(color) {
+		self.parent.setColor(color);
+	}
+	
+	function InitColorPalette() {
+		if (document.getElementsByTagName)
+			var x = document.getElementsByTagName('TD');
+		else if (document.all)
+			var x = document.all.tags('TD');
+		for (var i=0; i < x.length; i++) {
+			x[i].onmouseover = over;
+			x[i].onmouseout = out;
+			x[i].onmousedown = down;
+			x[i].style.background = '#' + x[i].id.replace('RTE_', ''); 
+		}
+	}
+	
+	function over() {
+		this.style.border = '1px solid #FFF';
+		this.style.cursor = 'hand';
+		this.style.cursor = 'pointer';
+	}
+	
+	function out() {
+		this.style.border = '1px solid #000';
+		this.style.cursor = 'default';
+	}
+	
+	function down() {
+		selectColor('#' + this.id.replace('RTE_', ''));
+	}
+	//-->
+	</script>
+	<style type="text/css"> 
+	body {
+		background: #FFF;
+		margin: 0;
+	}
+	table {
+		width: 150px;
+		height: 100px;
+		border: 1px solid #000;
+	}
+	td {
+		font-size: 4px;
+		width: 10px;
+		height: 10px;
+		border: 1px solid #000;
+	} 
+	</style> 
+</head>
+<body onload="InitColorPalette()" marginwidth="0" marginheight="0">
+<table cellpadding="0" cellspacing="0">
+	<tbody><tr>
+		<td id="RTE_FFFFFF" style="background: rgb(255, 255, 255);">&nbsp;</td>
+		<td id="RTE_FFCCCC" style="background: rgb(255, 204, 204); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFCC99" style="background: rgb(255, 204, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFFF99" style="background: rgb(255, 255, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFFFCC" style="background: rgb(255, 255, 204); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_99FF99" style="background: rgb(153, 255, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_99FFFF" style="background: rgb(153, 255, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_CCFFFF" style="background: rgb(204, 255, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_CCCCFF" style="background: rgb(204, 204, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFCCFF" style="background: rgb(255, 204, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+	</tr>
+	<tr>
+		<td id="RTE_CCCCCC" style="background: rgb(204, 204, 204);">&nbsp;</td>
+		<td id="RTE_FF6666" style="background: rgb(255, 102, 102); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FF9966" style="background: rgb(255, 153, 102); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFFF66" style="background: rgb(255, 255, 102);">&nbsp;</td>
+		<td id="RTE_FFFF33" style="background: rgb(255, 255, 51); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_66FF99" style="background: rgb(102, 255, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_33FFFF" style="background: rgb(51, 255, 255);">&nbsp;</td>
+		<td id="RTE_66FFFF" style="background: rgb(102, 255, 255);">&nbsp;</td>
+		<td id="RTE_9999FF" style="background: rgb(153, 153, 255);">&nbsp;</td>
+		<td id="RTE_FF99FF" style="background: rgb(255, 153, 255);">&nbsp;</td>
+	</tr>
+	<tr>
+		<td id="RTE_C0C0C0" style="background: rgb(192, 192, 192); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FF0000" style="background: rgb(255, 0, 0); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FF9900" style="background: rgb(255, 153, 0);">&nbsp;</td>
+		<td id="RTE_FFCC66" style="background: rgb(255, 204, 102);">&nbsp;</td>
+		<td id="RTE_FFFF00" style="background: rgb(255, 255, 0);">&nbsp;</td>
+		<td id="RTE_33FF33" style="background: rgb(51, 255, 51); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_66CCCC" style="background: rgb(102, 204, 204);">&nbsp;</td>
+		<td id="RTE_33CCFF" style="background: rgb(51, 204, 255);">&nbsp;</td>
+		<td id="RTE_6666CC" style="background: rgb(102, 102, 204);">&nbsp;</td>
+		<td id="RTE_CC66CC" style="background: rgb(204, 102, 204);">&nbsp;</td>
+	</tr>
+	<tr>
+		<td id="RTE_999999" style="background: rgb(153, 153, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_CC0000" style="background: rgb(204, 0, 0); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FF6600" style="background: rgb(255, 102, 0); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFCC33" style="background: rgb(255, 204, 51); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_FFCC00" style="background: rgb(255, 204, 0); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_33CC00" style="background: rgb(51, 204, 0); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_00CCCC" style="background: rgb(0, 204, 204); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_3366FF" style="background: rgb(51, 102, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_6633FF" style="background: rgb(102, 51, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_CC33CC" style="background: rgb(204, 51, 204); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+	</tr>
+	<tr>
+		<td id="RTE_666666" style="background: rgb(102, 102, 102);">&nbsp;</td>
+		<td id="RTE_990000" style="background: rgb(153, 0, 0);">&nbsp;</td>
+		<td id="RTE_CC6600" style="background: rgb(204, 102, 0);">&nbsp;</td>
+		<td id="RTE_CC9933" style="background: rgb(204, 153, 51);">&nbsp;</td>
+		<td id="RTE_999900" style="background: rgb(153, 153, 0);">&nbsp;</td>
+		<td id="RTE_009900" style="background: rgb(0, 153, 0);">&nbsp;</td>
+		<td id="RTE_339999" style="background: rgb(51, 153, 153);">&nbsp;</td>
+		<td id="RTE_3333FF" style="background: rgb(51, 51, 255); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_6600CC" style="background: rgb(102, 0, 204);">&nbsp;</td>
+		<td id="RTE_993399" style="background: rgb(153, 51, 153);">&nbsp;</td>
+	</tr>
+	<tr>
+		<td id="RTE_333333" style="background: rgb(51, 51, 51);">&nbsp;</td>
+		<td id="RTE_660000" style="background: rgb(102, 0, 0);">&nbsp;</td>
+		<td id="RTE_993300" style="background: rgb(153, 51, 0);">&nbsp;</td>
+		<td id="RTE_996633" style="background: rgb(153, 102, 51);">&nbsp;</td>
+		<td id="RTE_666600" style="background: rgb(102, 102, 0);">&nbsp;</td>
+		<td id="RTE_006600" style="background: rgb(0, 102, 0);">&nbsp;</td>
+		<td id="RTE_336666" style="background: rgb(51, 102, 102);">&nbsp;</td>
+		<td id="RTE_000099" style="background: rgb(0, 0, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_333399" style="background: rgb(51, 51, 153); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+		<td id="RTE_663366" style="background: rgb(102, 51, 102); border: 1px solid rgb(0, 0, 0); cursor: default;">&nbsp;</td>
+	</tr>
+	<tr>
+		<td id="RTE_000000" style="background: rgb(0, 0, 0);">&nbsp;</td>
+		<td id="RTE_330000" style="background: rgb(51, 0, 0);">&nbsp;</td>
+		<td id="RTE_663300" style="background: rgb(102, 51, 0);">&nbsp;</td>
+		<td id="RTE_663333" style="background: rgb(102, 51, 51);">&nbsp;</td>
+		<td id="RTE_333300" style="background: rgb(51, 51, 0);">&nbsp;</td>
+		<td id="RTE_003300" style="background: rgb(0, 51, 0);">&nbsp;</td>
+		<td id="RTE_003333" style="background: rgb(0, 51, 51);">&nbsp;</td>
+		<td id="RTE_000066" style="background: rgb(0, 0, 102);">&nbsp;</td>
+		<td id="RTE_330099" style="background: rgb(51, 0, 153);">&nbsp;</td>
+		<td id="RTE_330033" style="background: rgb(51, 0, 51);">&nbsp;</td>
+	</tr>
+</tbody></table>
+
+    
+    </iframe>
+    
+    
+<script language="JavaScript" type="text/javascript">
+<!--
+//build new richTextEditor
+var rte1 = new richTextEditor('rte1');
+<?php
+//format content for preloading
+if (!(isset($_POST["rte1"]))) {
+	$content = "here's the " . chr(13) . "\"preloaded <b>content</b>\"";
+	$content = rteSafe($content);
+} else {
+	//retrieve posted value
+	$content = rteSafe($_POST["rte1"]);
+}
+?>
+rte1.html = '<?=$content;?>';
+//rte1.toggleSrc = false;
+rte1.build();
+//-->
+</script>
+    
+    <table width="500" cellpadding="0" cellspacing="0" style="border: 1px solid #000;">
+	<tbody><tr>
+		<td>
+		<table class="rteBack" cellpadding="2" cellspacing="0" id="toolbar1_rte1" width="100%">
+			<tbody><tr>
+				<td>
+					<select id="formatblock_rte1" onchange="selectFont('rte1', this.id);">
+						<option value="">[Style]</option>
+						<option value="<p>">Paragraph &lt;p&gt;</option>
+						<option value="<h1>">Heading 1 &lt;h1&gt;</option>
+						<option value="<h2>">Heading 2 &lt;h2&gt;</option>
+						<option value="<h3>">Heading 3 &lt;h3&gt;</option>
+						<option value="<h4>">Heading 4 &lt;h4&gt;</option>
+						<option value="<h5>">Heading 5 &lt;h5&gt;</option>
+						<option value="<h6>">Heading 6 &lt;h6&gt;</option>
+						<option value="<address>">Address &lt;ADDR&gt;</option>
+						<option value="<pre>">Formatted &lt;pre&gt;</option>
+					</select>
+				</td>
+				<td>
+					<select id="fontname_rte1" onchange="selectFont('rte1', this.id)">
+						<option value="Font" selected="">[Font]</option>
+						<option value="Arial, Helvetica, sans-serif">Arial</option>
+						<option value="Courier New, Courier, mono">Courier New</option>
+						<option value="Times New Roman, Times, serif">Times New Roman</option>
+						<option value="Verdana, Arial, Helvetica, sans-serif">Verdana</option>
+					</select>
+				</td>
+				<td>
+					<select id="fontsize_rte1" onchange="selectFont('rte1', this.id);">
+						<option value="Size">[Size]</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+				</td>
+				<td width="100%"></td>
+			</tr>
+		</tbody></table>
+		<table class="rteBack" cellpadding="0" cellspacing="0" id="toolbar2_rte1" width="100%">
+			<tbody><tr>
+				<td><img class="rteImage" src="./images/bold.gif" width="25" height="24" alt="Bold" title="Bold" onmousedown="rteCommand('rte1', 'bold')"></td>
+				<td><img class="rteImage" src="./images/italic.gif" width="25" height="24" alt="Italic" title="Italic" onmousedown="rteCommand('rte1', 'italic')"></td>
+				<td><img class="rteImage" src="./images/underline.gif" width="25" height="24" alt="Underline" title="Underline" onmousedown="rteCommand('rte1', 'underline')"></td>
+				<td><img class="rteImage" src="./images/left_just.gif" width="25" height="24" alt="Align Left" title="Align Left" onmousedown="rteCommand('rte1', 'justifyleft')"></td>
+				<td><img class="rteImage" src="./images/centre.gif" width="25" height="24" alt="Center" title="Center" onmousedown="rteCommand('rte1', 'justifycenter')"></td>
+				<td><img class="rteImage" src="./images/right_just.gif" width="25" height="24" alt="Align Right" title="Align Right" onmousedown="rteCommand('rte1', 'justifyright')"></td>
+				<td><img class="rteImage" src="./images/hr.gif" width="25" height="24" alt="Horizontal Rule" title="Horizontal Rule" onmousedown="rteCommand('rte1', 'inserthorizontalrule')"></td>
+				<td><img class="rteImage" src="./images/numbered_list.gif" width="25" height="24" alt="Ordered List" title="Ordered List" onmousedown="rteCommand('rte1', 'insertorderedlist')"></td>
+				<td><img class="rteImage" src="./images/list.gif" width="25" height="24" alt="Unordered List" title="Unordered List" onmousedown="rteCommand('rte1', 'insertunorderedlist')"></td>
+				<td><img class="rteImage" src="./images/outdent.gif" width="25" height="24" alt="Outdent" title="Outdent" onmousedown="rteCommand('rte1', 'outdent')"></td>
+				<td><img class="rteImage" src="./images/indent.gif" width="25" height="24" alt="Indent" title="Indent" onmousedown="rteCommand('rte1', 'indent')"></td>
+				<td><div id="forecolor_rte1"><img class="rteImage" src="./images/textcolor.gif" width="25" height="24" alt="Text Color" title="Text Color" onmousedown="dlgColorPalette('rte1', 'forecolor', ''); return false;"></div></td>
+				<td><div id="hilitecolor_rte1"><img class="rteImage" src="./images/bgcolor.gif" width="25" height="24" alt="Background Color" title="Background Color" onmousedown="dlgColorPalette('rte1', 'hilitecolor', ''); return false;"></div></td>
+				<td><img class="rteImage" src="./images/hyperlink.gif" width="25" height="24" alt="Insert Link" title="Insert Link" onmousedown="dlgInsertLink('rte1')"></td>
+				<td><img class="rteImage" src="./images/image.gif" width="25" height="24" alt="Add Image" title="Add Image" onmousedown="addImage('rte1')"></td>
+				<td><img class="rteImage" src="./images/special_chars.gif" width="25" height="24" alt="Insert Special Character" title="Insert Special Character" onmousedown="dlgInsertSpecialChar('rte1')"></td>
+				<td><div id="table_rte1"><img class="rteImage" src="./images/insert_table.gif" width="25" height="24" alt="Insert Table" title="Insert Table" onmousedown="dlgInsertTable('rte1')"></div></td>
+				<td width="100%"></td>
+			</tr>
+		</tbody></table>
+			<iframe id="rte1" name="rte1" src="./blank.htm" frameborder="0" style="width: 100%; height: 200px; margin: 0; padding: 0;"></iframe>
+		</td>
+	</tr>
+</tbody></table>
+    
+    
+    
+    
+<p><input type="submit" name="submit" value="Submit" /></p>
+</form>
+<?php
+function rteSafe($strText) {
+	//returns safe code for preloading in the RTE
+	$tmpString = $strText;
+	
+	//convert all types of single quotes
+	$tmpString = str_replace(chr(145), chr(39), $tmpString);
+	$tmpString = str_replace(chr(146), chr(39), $tmpString);
+	$tmpString = str_replace("'", "&#39;", $tmpString);
+	
+	//convert all types of double quotes
+	$tmpString = str_replace(chr(147), chr(34), $tmpString);
+	$tmpString = str_replace(chr(148), chr(34), $tmpString);
+//	$tmpString = str_replace("\"", "\"", $tmpString);
+	
+	//replace carriage returns & line feeds
+	$tmpString = str_replace(chr(10), " ", $tmpString);
+	$tmpString = str_replace(chr(13), " ", $tmpString);
+	
+	return $tmpString;
+}
+?>
+<!-- END Demo Code -->
+</body>
+</html>
+
+
